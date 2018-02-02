@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RO起源：獵人陷阱傷害計算</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+	<script src="status.js" type="text/javascript"></script>
+	<style type="text/css">
+		.st_input{width:3.5em;text-align:center}
+		table{display:inline-block;vertical-align:top;border-collapse:collapse;}
+		#tb-show td,#tb-show th{border: 1px solid black;}
+		td,th{padding:0.25em 0.5em;}
+		#tb-show th{cursor:pointer;}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p style="color:red">計算機已包含：Job50 加成、心神凝聚 Lv10。</p>
+		<table id="tb-status">
+			<!--innerHTML created by js-->
+		</table>
+		<script type="text/javascript">
+			(function tbStatusRender(){
+				var str="<tr><th colspan='2'>素質</th><th>裝備</th><th>卡片/輔助</th></tr>";
+				['str','agi','vit','luk'].forEach(function(v,i){
+					str+="<tr>"
+					    +"<td>"+v+"</td>"
+					    +"<td><input v-model.number='"+v+"' type='number' value='1' class='st_input' v-on:change='refresh'></td>"
+					    +"<td colspan='2'></td>"
+					    +"</tr>\n";
+				});
+				['int','dex'].forEach(function(v,i){
+					str+="<tr>"
+					    +"<td>"+v+"</td>"
+					    +"<td></td>"
+					    +"<td><input type='number' value='0' class='st_input' v-model.number='"+v+"_eq' v-on:change='refresh'></td>"
+					    +"<td><input type='number' value='0' class='st_input' v-model.number='"+v+"_cd' v-on:change='refresh'></td>"
+					    +"</tr>\n";
+				});
+				str+="<tr><td colspan='4'>剩餘點數：{{restpoint}}</td></tr>"
+				document.getElementById('tb-status').innerHTML=str;
+			})();
+		</script>
+		<table id="tb-show">
+			<thead>
+				<tr>
+					<th v-on:click="sortByDex">dex</th>
+					<th v-on:click="sortByInt">int</th>
+					<th v-on:click="sortByDmg">陷阱傷害</th>
+					<th v-on:click="sortByDmg">平均</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="value in list99">
+					<td>{{value.dex}}</td><td>{{value.int}}</td><td>{{value.dmg}}</td><td>{{Math.round(value.avg*100)/100}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script src="main.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		app.refresh();
+	</script>
+</body>
+</html>
