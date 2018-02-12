@@ -16,33 +16,31 @@
 <body>
 	<div id="app">
 		<p style="color:red">計算機已包含：Job50 加成、心神凝聚 Lv10。</p>
-		<table id="tb-status">
-			<!--innerHTML created by js-->
+		<table>
+			<thead>
+				<tr><th colspan='2'>人物狀態</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>等級</td><td><input v-model.number='lv' type='number' required value='1' class='st_input' v-on:change='refresh'></td></tr>
+				<tr><td>str</td><td><input v-model.number='str' type='number' required value='1' class='st_input' v-on:change='refresh'></td></tr>
+				<tr><td>agi</td><td><input v-model.number='agi' type='number' required value='1' class='st_input' v-on:change='refresh'></td></tr>
+				<tr><td>vit</td><td><input v-model.number='vit' type='number' required value='1' class='st_input' v-on:change='refresh'></td></tr>
+				<tr><td>luk</td><td><input v-model.number='luk' type='number' required value='1' class='st_input' v-on:change='refresh'></td></tr>
+			</tbody>			
 		</table>
-		<script type="text/javascript">
-			(function tbStatusRender(){
-				var str="<tr><th colspan='2'>素質</th><th>裝備</th><th>卡片/輔助</th></tr>";
-				['str','agi','vit','luk'].forEach(function(v,i){
-					str+="<tr>"
-					    +"<td>"+v+"</td>"
-					    +"<td><input v-model.number='"+v+"' type='number' value='1' class='st_input' v-on:change='refresh'></td>"
-					    +"<td colspan='2'></td>"
-					    +"</tr>\n";
-				});
-				['int','dex'].forEach(function(v,i){
-					str+="<tr>"
-					    +"<td>"+v+"</td>"
-					    +"<td></td>"
-					    +"<td><input type='number' value='0' class='st_input' v-model.number='"+v+"_eq' v-on:change='refresh'></td>"
-					    +"<td><input type='number' value='0' class='st_input' v-model.number='"+v+"_cd' v-on:change='refresh'></td>"
-					    +"</tr>\n";
-				});
-				str+="<tr><td colspan='4'>剩餘點數：{{restpoint}}</td></tr>"
-				document.getElementById('tb-status').innerHTML=str;
-			})();
-		</script>
+		<table>
+			<thead>
+				<tr><th colspan='2'>裝備/卡片</th></tr>
+			</thead>
+			<tbody>			
+				<tr><td>int裝備+卡片</td><td><input type='number' required value='0' class='st_input' v-model.number='int_cd' v-on:change='refresh'></td></tr>
+				<tr><td>dex裝備</td><td><input type='number' required value='0' class='st_input' v-model.number='dex_eq' v-on:change='refresh'></td></tr>
+				<tr><td>dex卡片</td><td><input type='number' required value='0' class='st_input' v-model.number='dex_cd' v-on:change='refresh'></td></tr>
+			</tbody>
+		</table>
 		<table id="tb-show">
 			<thead>
+				<tr><td colspan='4' style="border:none;text-align:left;color:blue;">int、dex 可用點數：{{restpoint}}</td></tr>
 				<tr>
 					<th v-on:click="sortByDex">dex</th>
 					<th v-on:click="sortByInt">int</th>

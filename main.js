@@ -1,6 +1,7 @@
 var app=new Vue({
 	el:"#app",
 	data:{
+		lv:99,
 		str:1,
 		agi:1,
 		vit:1,
@@ -19,7 +20,7 @@ var app=new Vue({
 			st.vit=this.vit;
 			st.luk=this.luk;
 			var r;
-			st.lv=99;
+			st.lv=this.lv;
 			st.dex=99;
 			var A=[];
 			for(st.int=1;st.int<=99 && fitDex();++st.int)
@@ -66,13 +67,13 @@ var app=new Vue({
 	computed:{
 		restpoint:function (){
 			var st=new status();
+			st.lv=this.lv;
 			st.str=this.str;
 			st.agi=this.agi;
 			st.vit=this.vit;
 			st.int=this.luk;
 			st.dex=1;
 			st.luk=1;
-			st.lv=99;
 			return st.getRest();
 		}
 	}
